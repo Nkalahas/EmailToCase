@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <validationRules>
+        <fullName>TSN_Restrict_Subject_Length</fullName>
+        <active>true</active>
+        <description>This validation rule will ensure that Subject cannot be more than 55 characters</description>
+        <errorConditionFormula>AND(
+RecordTypeId == $Setup.ObjectRecordTypeIds__c.Case_TSN_RecordType__c,
+LEN( Subject) &gt;55,
+OR(
+ISNEW(),
+ISCHANGED(RecordTypeId)
+),
+!AND(ISNEW(), RecordTypeId == $Setup.ObjectRecordTypeIds__c.Case_TSN_RecordType__c,ISPICKVAL (Contact_Type__c , &apos;Cisco&apos;), OR($User.Id = &apos;00580000003FrC4&apos;,$User.Id = &apos;005300000010pIr&apos;)),
+skipValidations__c = False
+)</errorConditionFormula>
+        <errorDisplayField>Subject</errorDisplayField>
+        <errorMessage>Field is limited to 55 characters.</errorMessage>
+    </validationRules>
+</CustomObject>
